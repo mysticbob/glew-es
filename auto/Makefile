@@ -13,12 +13,25 @@ SHELL = bash
 REGISTRY = registry
 REGISTRY_URL = http://www.opengl.org/registry/
 #http://oss.sgi.com/projects/ogl-sample/registry/
+REGISTRY_SPECIFIC_PATH = /registry/
 BIN = bin
 SRC = src
 CORE = core
 EXT = extensions
 BLACKLIST = blacklist
 
+################################################################################
+# OpenGL ES support 
+REGISTRY_ES = registry_es
+REGISTRY_ES_URL = http://www.khronos.org/registry/gles/
+REGISTRY_ES_SPECIFIC_PATH = /registry/gles/
+
+
+REGISTRY_EGL = registry_egl
+REGISTRY_EGL_URL = http://www.khronos.org/registry/egl/
+REGISTRY_EGL_SPECIFIC_PATH = /registry/egl/
+
+################################################################################
 GL_CORE_SPEC := $(CORE)/GL_VERSION*
 GLX_CORE_SPEC := $(CORE)/GLX_VERSION*
 ifeq (custom,$(MAKECMDGOALS))
@@ -84,7 +97,16 @@ $(REGISTRY)/.dummy: $(BIN)/update_registry.sh
 	@echo "--------------------------------------------------------------------"
 	@echo "Downloading registry"
 	@echo "--------------------------------------------------------------------"
-	$(BIN)/update_registry.sh $(REGISTRY) $(REGISTRY_URL)
+	$(BIN)/update_registry.sh $(REGISTRY) $(REGISTRY_URL) $(REGISTRY_SPECIFIC_PATH)
+	@echo "--------------------------------------------------------------------"
+	@echo "Downloading registry - ES"
+	@echo "--------------------------------------------------------------------"
+	$(BIN)/update_registry.sh $(REGISTRY_ES) $(REGISTRY_ES_URL) $(REGISTRY_ES_SPECIFIC_PATH)
+
+	@echo "--------------------------------------------------------------------"
+	@echo "Downloading registry - EGL"
+	@echo "--------------------------------------------------------------------"
+	$(BIN)/update_registry.sh $(REGISTRY_EGL) $(REGISTRY_EGL_URL) $(REGISTRY_EGL_SPECIFIC_PATH)
 	touch $@
 
 $(EXT)/.dummy: $(REGISTRY)/.dummy

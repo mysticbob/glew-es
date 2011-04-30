@@ -22,7 +22,7 @@ set +e
 
 wget                                                    \
     --mirror                                            \
-    --no-parent                                         \
+    --include $3	                                	\
     --no-host-directories                               \
     --cut-dirs=2                                        \
     --accept=txt,html                                   \
