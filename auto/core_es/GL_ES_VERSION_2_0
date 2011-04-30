@@ -1,0 +1,216 @@
+GL_ES_VERSION_2_0
+http://www.khronos.org/registry/gles/specs/2.0/es_full_spec_2.0.25.pdf
+
+	GL_FUNC_ADD 0x8006
+	GL_BLEND_EQUATION 0x8009
+	GL_BLEND_EQUATION_RGB 0x8009
+	GL_BLEND_EQUATION_ALPHA 0x883D
+	GL_FUNC_SUBTRACT 0x800A
+	GL_FUNC_REVERSE_SUBTRACT 0x800B
+	GL_BLEND_DST_RGB 0x80C8
+	GL_BLEND_SRC_RGB 0x80C9
+	GL_BLEND_DST_ALPHA 0x80CA
+	GL_BLEND_SRC_ALPHA 0x80CB
+	GL_CONSTANT_COLOR 0x8001
+	GL_ONE_MINUS_CONSTANT_COLOR 0x8002
+	GL_CONSTANT_ALPHA 0x8003
+	GL_ONE_MINUS_CONSTANT_ALPHA 0x8004
+	GL_BLEND_COLOR 0x8005
+	GL_STREAM_DRAW 0x88E0
+	GL_CURRENT_VERTEX_ATTRIB 0x8626
+	GL_STENCIL_BACK_FUNC 0x8800
+	GL_STENCIL_BACK_FAIL 0x8801
+	GL_STENCIL_BACK_PASS_DEPTH_FAIL 0x8802
+	GL_STENCIL_BACK_PASS_DEPTH_PASS 0x8803
+	GL_STENCIL_BACK_REF 0x8CA3
+	GL_STENCIL_BACK_VALUE_MASK 0x8CA4
+	GL_STENCIL_BACK_WRITEMASK 0x8CA5
+	GL_INT 0x1404
+	GL_UNSIGNED_INT 0x1405
+	GL_DEPTH_COMPONENT 0x1902
+	GL_FRAGMENT_SHADER 0x8B30
+	GL_VERTEX_SHADER 0x8B31
+	GL_MAX_VERTEX_ATTRIBS 0x8869
+	GL_MAX_VERTEX_UNIFORM_VECTORS 0x8DFB
+	GL_MAX_VARYING_VECTORS 0x8DFC
+	GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS 0x8B4D
+	GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS 0x8B4C
+	GL_MAX_TEXTURE_IMAGE_UNITS 0x8872
+	GL_MAX_FRAGMENT_UNIFORM_VECTORS 0x8DFD
+	GL_SHADER_TYPE 0x8B4F
+	GL_DELETE_STATUS 0x8B80
+	GL_LINK_STATUS 0x8B82
+	GL_VALIDATE_STATUS 0x8B83
+	GL_ATTACHED_SHADERS 0x8B85
+	GL_ACTIVE_UNIFORMS 0x8B86
+	GL_ACTIVE_UNIFORM_MAX_LENGTH 0x8B87
+	GL_ACTIVE_ATTRIBUTES 0x8B89
+	GL_ACTIVE_ATTRIBUTE_MAX_LENGTH 0x8B8A
+	GL_SHADING_LANGUAGE_VERSION 0x8B8C
+	GL_CURRENT_PROGRAM 0x8B8D
+	GL_INCR_WRAP 0x8507
+	GL_DECR_WRAP 0x8508
+	GL_TEXTURE_CUBE_MAP 0x8513
+	GL_TEXTURE_BINDING_CUBE_MAP 0x8514
+	GL_TEXTURE_CUBE_MAP_POSITIVE_X 0x8515
+	GL_TEXTURE_CUBE_MAP_NEGATIVE_X 0x8516
+	GL_TEXTURE_CUBE_MAP_POSITIVE_Y 0x8517
+	GL_TEXTURE_CUBE_MAP_NEGATIVE_Y 0x8518
+	GL_TEXTURE_CUBE_MAP_POSITIVE_Z 0x8519
+	GL_TEXTURE_CUBE_MAP_NEGATIVE_Z 0x851A
+	GL_MAX_CUBE_MAP_TEXTURE_SIZE 0x851C
+	GL_MIRRORED_REPEAT 0x8370
+	GL_FLOAT_VEC2 0x8B50
+	GL_FLOAT_VEC3 0x8B51
+	GL_FLOAT_VEC4 0x8B52
+	GL_INT_VEC2 0x8B53
+	GL_INT_VEC3 0x8B54
+	GL_INT_VEC4 0x8B55
+	GL_BOOL 0x8B56
+	GL_BOOL_VEC2 0x8B57
+	GL_BOOL_VEC3 0x8B58
+	GL_BOOL_VEC4 0x8B59
+	GL_FLOAT_MAT2 0x8B5A
+	GL_FLOAT_MAT3 0x8B5B
+	GL_FLOAT_MAT4 0x8B5C
+	GL_SAMPLER_2D 0x8B5E
+	GL_SAMPLER_CUBE 0x8B60
+	GL_VERTEX_ATTRIB_ARRAY_ENABLED 0x8622
+	GL_VERTEX_ATTRIB_ARRAY_SIZE 0x8623
+	GL_VERTEX_ATTRIB_ARRAY_STRIDE 0x8624
+	GL_VERTEX_ATTRIB_ARRAY_TYPE 0x8625
+	GL_VERTEX_ATTRIB_ARRAY_NORMALIZED 0x886A
+	GL_VERTEX_ATTRIB_ARRAY_POINTER 0x8645
+	GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING 0x889F
+	GL_IMPLEMENTATION_COLOR_READ_TYPE 0x8B9A
+	GL_IMPLEMENTATION_COLOR_READ_FORMAT 0x8B9B
+	GL_COMPILE_STATUS 0x8B81
+	GL_INFO_LOG_LENGTH 0x8B84
+	GL_SHADER_SOURCE_LENGTH 0x8B88
+	GL_SHADER_COMPILER 0x8DFA
+	GL_SHADER_BINARY_FORMATS 0x8DF8
+	GL_NUM_SHADER_BINARY_FORMATS 0x8DF9
+	GL_LOW_FLOAT 0x8DF0
+	GL_MEDIUM_FLOAT 0x8DF1
+	GL_HIGH_FLOAT 0x8DF2
+	GL_LOW_INT 0x8DF3
+	GL_MEDIUM_INT 0x8DF4
+	GL_HIGH_INT 0x8DF5
+	GL_FRAMEBUFFER 0x8D40
+	GL_RENDERBUFFER 0x8D41
+	GL_RGBA4 0x8056
+	GL_RGB5_A1 0x8057
+	GL_RGB565 0x8D62
+	GL_DEPTH_COMPONENT16 0x81A5
+	GL_STENCIL_INDEX 0x1901
+	GL_STENCIL_INDEX8 0x8D48
+	GL_RENDERBUFFER_WIDTH 0x8D42
+	GL_RENDERBUFFER_HEIGHT 0x8D43
+	GL_RENDERBUFFER_INTERNAL_FORMAT 0x8D44
+	GL_RENDERBUFFER_RED_SIZE 0x8D50
+	GL_RENDERBUFFER_GREEN_SIZE 0x8D51
+	GL_RENDERBUFFER_BLUE_SIZE 0x8D52
+	GL_RENDERBUFFER_ALPHA_SIZE 0x8D53
+	GL_RENDERBUFFER_DEPTH_SIZE 0x8D54
+	GL_RENDERBUFFER_STENCIL_SIZE 0x8D55
+	GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE 0x8CD0
+	GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME 0x8CD1
+	GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL 0x8CD2
+	GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE 0x8CD3
+	GL_COLOR_ATTACHMENT0 0x8CE0
+	GL_DEPTH_ATTACHMENT 0x8D00
+	GL_STENCIL_ATTACHMENT 0x8D20
+	GL_NONE 0
+	GL_FRAMEBUFFER_COMPLETE 0x8CD5
+	GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT 0x8CD6
+	GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT 0x8CD7
+	GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS 0x8CD9
+	GL_FRAMEBUFFER_UNSUPPORTED 0x8CDD
+	GL_FRAMEBUFFER_BINDING 0x8CA6
+	GL_RENDERBUFFER_BINDING 0x8CA7
+	GL_MAX_RENDERBUFFER_SIZE 0x84E8
+	GL_INVALID_FRAMEBUFFER_OPERATION 0x0506
+	void  glAttachShader (GLuint program, GLuint shader)
+	void  glBindAttribLocation (GLuint program, GLuint index, const GLchar* name)
+	void  glBindFramebuffer (GLenum target, GLuint framebuffer)
+	void  glBindRenderbuffer (GLenum target, GLuint renderbuffer)
+	void  glBlendColor (GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha)
+	void  glBlendEquation ( GLenum mode )
+	void  glBlendEquationSeparate (GLenum modeRGB, GLenum modeAlpha)
+	void  glBlendFuncSeparate (GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
+	GLenum  glCheckFramebufferStatus (GLenum target)
+	void  glCompileShader (GLuint shader)
+	GLuint  glCreateProgram (void)
+	GLuint  glCreateShader (GLenum type)
+	void  glDeleteFramebuffers (GLsizei n, const GLuint* framebuffers)
+	void  glDeleteProgram (GLuint program)
+	void  glDeleteRenderbuffers (GLsizei n, const GLuint* renderbuffers)
+	void  glDeleteShader (GLuint shader)
+	void  glDetachShader (GLuint program, GLuint shader)
+	void  glDisableVertexAttribArray (GLuint index)
+	void  glEnableVertexAttribArray (GLuint index)
+	void  glFramebufferRenderbuffer (GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+	void  glFramebufferTexture2D (GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
+	void  glGenerateMipmap (GLenum target)
+	void  glGenFramebuffers (GLsizei n, GLuint* framebuffers)
+	void  glGenRenderbuffers (GLsizei n, GLuint* renderbuffers)
+	void  glGetActiveAttrib (GLuint program, GLuint index, GLsizei bufsize, GLsizei* length, GLint* size, GLenum* type, GLchar* name)
+	void  glGetActiveUniform (GLuint program, GLuint index, GLsizei bufsize, GLsizei* length, GLint* size, GLenum* type, GLchar* name)
+	void  glGetAttachedShaders (GLuint program, GLsizei maxcount, GLsizei* count, GLuint* shaders)
+	int  glGetAttribLocation (GLuint program, const GLchar* name)
+	void  glGetFramebufferAttachmentParameteriv (GLenum target, GLenum attachment, GLenum pname, GLint* params)
+	void  glGetProgramiv (GLuint program, GLenum pname, GLint* params)
+	void  glGetProgramInfoLog (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog)
+	void  glGetRenderbufferParameteriv (GLenum target, GLenum pname, GLint* params)
+	void  glGetShaderiv (GLuint shader, GLenum pname, GLint* params)
+	void  glGetShaderInfoLog (GLuint shader, GLsizei bufsize, GLsizei* length, GLchar* infolog)
+	void  glGetShaderPrecisionFormat (GLenum shadertype, GLenum precisiontype, GLint* range, GLint* precision)
+	void  glGetShaderSource (GLuint shader, GLsizei bufsize, GLsizei* length, GLchar* source)
+	void  glGetUniformfv (GLuint program, GLint location, GLfloat* params)
+	void  glGetUniformiv (GLuint program, GLint location, GLint* params)
+	int  glGetUniformLocation (GLuint program, const GLchar* name)
+	void  glGetVertexAttribfv (GLuint index, GLenum pname, GLfloat* params)
+	void  glGetVertexAttribiv (GLuint index, GLenum pname, GLint* params)
+	void  glGetVertexAttribPointerv (GLuint index, GLenum pname, GLvoid** pointer)
+	GLboolean  glIsFramebuffer (GLuint framebuffer)
+	GLboolean  glIsProgram (GLuint program)
+	GLboolean  glIsRenderbuffer (GLuint renderbuffer)
+	GLboolean  glIsShader (GLuint shader)
+	void  glLinkProgram (GLuint program)
+	void  glReleaseShaderCompiler (void)
+	void  glRenderbufferStorage (GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
+	void  glShaderBinary (GLsizei n, const GLuint* shaders, GLenum binaryformat, const GLvoid* binary, GLsizei length)
+	void  glShaderSource (GLuint shader, GLsizei count, const GLchar** string, const GLint* length)
+	void  glStencilFuncSeparate (GLenum face, GLenum func, GLint ref, GLuint mask)
+	void  glStencilMaskSeparate (GLenum face, GLuint mask)
+	void  glStencilOpSeparate (GLenum face, GLenum fail, GLenum zfail, GLenum zpass)
+	void  glUniform1f (GLint location, GLfloat x)
+	void  glUniform1fv (GLint location, GLsizei count, const GLfloat* v)
+	void  glUniform1i (GLint location, GLint x)
+	void  glUniform1iv (GLint location, GLsizei count, const GLint* v)
+	void  glUniform2f (GLint location, GLfloat x, GLfloat y)
+	void  glUniform2fv (GLint location, GLsizei count, const GLfloat* v)
+	void  glUniform2i (GLint location, GLint x, GLint y)
+	void  glUniform2iv (GLint location, GLsizei count, const GLint* v)
+	void  glUniform3f (GLint location, GLfloat x, GLfloat y, GLfloat z)
+	void  glUniform3fv (GLint location, GLsizei count, const GLfloat* v)
+	void  glUniform3i (GLint location, GLint x, GLint y, GLint z)
+	void  glUniform3iv (GLint location, GLsizei count, const GLint* v)
+	void  glUniform4f (GLint location, GLfloat x, GLfloat y, GLfloat z, GLfloat w)
+	void  glUniform4fv (GLint location, GLsizei count, const GLfloat* v)
+	void  glUniform4i (GLint location, GLint x, GLint y, GLint z, GLint w)
+	void  glUniform4iv (GLint location, GLsizei count, const GLint* v)
+	void  glUniformMatrix2fv (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value)
+	void  glUniformMatrix3fv (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value)
+	void  glUniformMatrix4fv (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value)
+	void  glUseProgram (GLuint program)
+	void  glValidateProgram (GLuint program)
+	void  glVertexAttrib1f (GLuint indx, GLfloat x)
+	void  glVertexAttrib1fv (GLuint indx, const GLfloat* values)
+	void  glVertexAttrib2f (GLuint indx, GLfloat x, GLfloat y)
+	void  glVertexAttrib2fv (GLuint indx, const GLfloat* values)
+	void  glVertexAttrib3f (GLuint indx, GLfloat x, GLfloat y, GLfloat z)
+	void  glVertexAttrib3fv (GLuint indx, const GLfloat* values)
+	void  glVertexAttrib4f (GLuint indx, GLfloat x, GLfloat y, GLfloat z, GLfloat w)
+	void  glVertexAttrib4fv (GLuint indx, const GLfloat* values)
+	void  glVertexAttribPointer (GLuint indx, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr)
