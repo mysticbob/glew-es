@@ -25,12 +25,12 @@ BLACKLIST = blacklist
 REGISTRY_ES = registry_es
 REGISTRY_ES_URL = http://www.khronos.org/registry/gles/
 REGISTRY_ES_SPECIFIC_PATH = /registry/gles/
-
+EXT_ES = extensions_es
 
 REGISTRY_EGL = registry_egl
 REGISTRY_EGL_URL = http://www.khronos.org/registry/egl/
 REGISTRY_EGL_SPECIFIC_PATH = /registry/egl/
-
+EXT_EGL = extensions_egl
 ################################################################################
 GL_CORE_SPEC := $(CORE)/GL_VERSION*
 GLX_CORE_SPEC := $(CORE)/GLX_VERSION*
@@ -122,8 +122,18 @@ else
 	find $(CORE) -maxdepth 1 -type f | grep -v VERSION | grep -v "~" | \
 	xargs cp --target-directory=$(EXT)
 endif
-	touch $@
 
+	@echo "--------------------------------------------------------------------"
+	@echo "Creating descriptors - ES"
+	@echo "--------------------------------------------------------------------"
+	rm -rf $(EXT_ES)
+	$(BIN)/update_ext_es.sh $(EXT_ES) $(REGISTRY_ES) $(BLACKLIST)
+	@echo "--------------------------------------------------------------------"
+	@echo "Creating descriptors - EGL"
+	@echo "--------------------------------------------------------------------"
+	rm -rf $(EXT_EGL)
+	$(BIN)/update_ext_egl.sh $(EXT_EGL) $(REGISTRY_EGL) $(BLACKLIST)
+	touch $@
 $(I.DEST)/glew.h: $(EXT)/.dummy
 	@echo "--------------------------------------------------------------------"
 	@echo "Creating glew.h"
