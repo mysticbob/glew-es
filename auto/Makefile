@@ -17,6 +17,7 @@ REGISTRY_SPECIFIC_PATH = /registry/
 BIN = bin
 SRC = src
 CORE = core
+CORE_ES = core_es
 EXT = extensions
 BLACKLIST = blacklist
 
@@ -34,6 +35,7 @@ EXT_EGL = extensions_egl
 ################################################################################
 GL_CORE_SPEC := $(CORE)/GL_VERSION*
 GLX_CORE_SPEC := $(CORE)/GLX_VERSION*
+GLES_CORE_SPEC := $(CORE_ES)/GL_ES_VERSION*
 ifeq (custom,$(MAKECMDGOALS))
 #GL_CORE_SPEC := $(shell grep GL_VERSION custom.txt | perl -e 's/\(.*\)/$(CORE)\/\1/g;')
 GL_EXT_SPEC := $(shell grep "^[ \t]*GL_" custom.txt | grep -v GL_VERSION | perl -e 's/\(.*\)/$(EXT)\/\1/g;')
@@ -44,6 +46,7 @@ else
 GL_EXT_SPEC := $(EXT)/GL_*
 WGL_EXT_SPEC := $(EXT)/WGL_*
 GLX_EXT_SPEC := $(EXT)/GLX_*
+GLES_EXT_SPEC := $(EXT_ES)/GL_*
 endif
 
 PARSE_SPEC = parse_spec.pl
@@ -172,6 +175,11 @@ $(I.DEST)/glesew.h: $(EXT_ES)/.dummy
 	@echo "--------------------------------------------------------------------"
 	@echo "Creating glesew.h"
 	@echo "--------------------------------------------------------------------"
+	cp -f $(SRC)/glew_license.h $@
+	cat $(SRC)/glew_head_es.h >> $@
+	$(BIN)/make_header.pl GLAPIENTRY GL $(GLES_CORE_SPEC) >> $@
+	$(BIN)/make_header.pl GLAPIENTRY GL $(GLES_EXT_SPEC) >> $@
+
 
 $(I.DEST)/eglew.h: $(EXT_EGL)/.dummy
 	@echo "--------------------------------------------------------------------"
