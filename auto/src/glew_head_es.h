@@ -90,6 +90,11 @@
  *                                  int arg2) KHRONOS_APIATTRIBUTES;
  */
 
+
+#ifndef __glesew_h__
+#define __glesew_h__
+#define __GLESEW_H__
+
 /*-------------------------------------------------------------------------
  * Definition of KHRONOS_APICALL
  *-------------------------------------------------------------------------

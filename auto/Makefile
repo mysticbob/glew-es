@@ -179,7 +179,16 @@ $(I.DEST)/glesew.h: $(EXT_ES)/.dummy
 	cat $(SRC)/glew_head_es.h >> $@
 	$(BIN)/make_header.pl GLAPIENTRY GL $(GLES_CORE_SPEC) >> $@
 	$(BIN)/make_header.pl GLAPIENTRY GL $(GLES_EXT_SPEC) >> $@
-
+	echo -e "/* ------------------------------------------------------------------------- */\n\n#if defined(GLEW_MX) && defined(_WIN32)\n#define GLEW_FUN_EXPORT\n#else\n#define GLEW_FUN_EXPORT GLEWAPI\n#endif /* GLEW_MX */\n" >> $@
+	echo -e "#if defined(GLEW_MX)\n#define GLEW_VAR_EXPORT\n#else\n#define GLEW_VAR_EXPORT GLEWAPI\n#endif /* GLEW_MX */\n" >> $@
+	echo -e "#if defined(GLEW_MX) && defined(_WIN32)\nstruct GLEWContextStruct\n{\n#endif /* GLEW_MX */" >> $@
+	$(BIN)/make_struct_fun.pl GLEW_FUN_EXPORT $(GLES_CORE_SPEC) $(GLES_EXT_SPEC) >> $@
+	echo -e "\n#if defined(GLEW_MX) && !defined(_WIN32)\nstruct GLEWContextStruct\n{\n#endif /* GLEW_MX */\n" >> $@
+	$(BIN)/make_struct_var.pl GLEW_VAR_EXPORT $(GLES_CORE_SPEC) $(GLES_EXT_SPEC) >> $@
+	echo -e "\n#ifdef GLEW_MX\n}; /* GLEWContextStruct */\n#endif /* GLEW_MX */\n" >> $@
+	perl -e 's/GLEW_VAR_EXPORT GLboolean __GLEW_ES_VERSION_1_1;/GLEW_VAR_EXPORT GLboolean __GLEW_ES_VERSION_1_0;\nGLEW_VAR_EXPORT GLboolean __GLEW_ES_VERSION_1_1;/' -pi $@
+	rm -f $@.bak
+	echo -e "\n#endif /* __glesew_h__ */" >> $@
 
 $(I.DEST)/eglew.h: $(EXT_EGL)/.dummy
 	@echo "--------------------------------------------------------------------"
