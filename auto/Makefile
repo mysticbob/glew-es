@@ -58,7 +58,10 @@ B.DEST = $(TOP)/build/vc6
 I.TARGETS = \
 	$(I.DEST)/glew.h \
 	$(I.DEST)/wglew.h \
-	$(I.DEST)/glxew.h
+	$(I.DEST)/glxew.h \
+	$(I.DEST)/glesew.h \
+	$(I.DEST)/eglew.h 
+	
 
 ifeq (yes,$(GLEW_SPLIT_SOURCE))
 S.TARGETS = \
@@ -98,11 +101,14 @@ $(REGISTRY)/.dummy: $(BIN)/update_registry.sh
 	@echo "Downloading registry"
 	@echo "--------------------------------------------------------------------"
 	$(BIN)/update_registry.sh $(REGISTRY) $(REGISTRY_URL) $(REGISTRY_SPECIFIC_PATH)
+	touch $@
+$(REGISTRY_ES)/.dummy : $(BIN)/update_registry.sh
 	@echo "--------------------------------------------------------------------"
 	@echo "Downloading registry - ES"
 	@echo "--------------------------------------------------------------------"
 	$(BIN)/update_registry.sh $(REGISTRY_ES) $(REGISTRY_ES_URL) $(REGISTRY_ES_SPECIFIC_PATH)
-
+	touch $@
+$(REGISTRY_EGL)/.dummy : $(BIN)/update_registry.sh
 	@echo "--------------------------------------------------------------------"
 	@echo "Downloading registry - EGL"
 	@echo "--------------------------------------------------------------------"
@@ -122,18 +128,24 @@ else
 	find $(CORE) -maxdepth 1 -type f | grep -v VERSION | grep -v "~" | \
 	xargs cp --target-directory=$(EXT)
 endif
+	touch $@
 
+$(EXT_ES)/.dummy : $(REGISTRY_ES)/.dummy
 	@echo "--------------------------------------------------------------------"
 	@echo "Creating descriptors - ES"
 	@echo "--------------------------------------------------------------------"
 	rm -rf $(EXT_ES)
 	$(BIN)/update_ext_es.sh $(EXT_ES) $(REGISTRY_ES) $(BLACKLIST)
+	touch $@
+
+$(EXT_EGL)/.dummy :$(REGISTRY_EGL)/.dummy
 	@echo "--------------------------------------------------------------------"
 	@echo "Creating descriptors - EGL"
 	@echo "--------------------------------------------------------------------"
 	rm -rf $(EXT_EGL)
 	$(BIN)/update_ext_egl.sh $(EXT_EGL) $(REGISTRY_EGL) $(BLACKLIST)
 	touch $@
+	
 $(I.DEST)/glew.h: $(EXT)/.dummy
 	@echo "--------------------------------------------------------------------"
 	@echo "Creating glew.h"
@@ -155,6 +167,16 @@ $(I.DEST)/glew.h: $(EXT)/.dummy
 	perl -e 's/GLEW_VAR_EXPORT GLboolean __GLEW_VERSION_1_2;/GLEW_VAR_EXPORT GLboolean __GLEW_VERSION_1_1;\nGLEW_VAR_EXPORT GLboolean __GLEW_VERSION_1_2;/' -pi $@
 	rm -f $@.bak
 	cat $(SRC)/glew_tail.h >> $@
+
+$(I.DEST)/glesew.h: $(EXT_ES)/.dummy
+	@echo "--------------------------------------------------------------------"
+	@echo "Creating glesew.h"
+	@echo "--------------------------------------------------------------------"
+
+$(I.DEST)/eglew.h: $(EXT_EGL)/.dummy
+	@echo "--------------------------------------------------------------------"
+	@echo "Creating eglew.h"
+	@echo "--------------------------------------------------------------------"
 
 $(I.DEST)/wglew.h: $(EXT)/.dummy
 	@echo "--------------------------------------------------------------------"
