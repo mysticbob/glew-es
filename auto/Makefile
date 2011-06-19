@@ -294,7 +294,13 @@ $(S.DEST)/glew.c: $(EXT)/.dummy $(EXT_EGL)/.dummy $(EXT_ES)/.dummy
 	$(BIN)/make_def_var.pl EGL $(EGL_CORE_SPEC) >> $@
 	$(BIN)/make_def_var.pl EGL $(EGL_EXT_SPEC) >> $@
 	echo -e "\n#endif /* !GLEW_MX */\n" >> $@;
-	echo -e "\n#if defined(_WIN32)" >> $@
+	$(BIN)/make_init.pl EGL $(EGL_CORE_SPEC) >> $@
+	$(BIN)/make_init.pl EGL $(EGL_EXT_SPEC) >> $@
+	cat $(SRC)/glew_init_egl.c >> $@
+	$(BIN)/make_list.pl $(EGL_CORE_SPEC) | grep -v '\"EGL_VERSION' >> $@
+	$(BIN)/make_list.pl $(EGL_EXT_SPEC) >> $@
+	echo -e "\n  return GLEW_OK;\n}" >> $@;
+	echo -e "\n#elif defined(_WIN32)" >> $@
 	echo -e "\n#if !defined(GLEW_MX)" >> $@
 	$(BIN)/make_def_fun.pl WGL $(WGL_EXT_SPEC) >> $@
 	$(BIN)/make_def_var.pl WGL $(WGL_EXT_SPEC) >> $@
