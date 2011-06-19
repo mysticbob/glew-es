@@ -61,6 +61,11 @@ EOT
   sed '$d' < tmp > tmp2
   mv tmp2 $1/GL_IMG_user_clip_plane
 
+# add missing tokens to GL_OES_single_precision
+	cat >> $1/GL_OES_single_precision <<EOT
+	typedef double GLclampd
+EOT
+
 
 # NOTE: GL_COVERAGE_SAMPLES_NV values differ between GL_NV_multisample_coverage
 # TODO: Fix this bug??

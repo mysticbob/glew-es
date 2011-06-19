@@ -95,6 +95,10 @@
 #define __glesew_h__
 #define __GLESEW_H__
 
+#if !defined(__glew_h__) || !defined(__GLEW_H__)
+#error glesew.h included instead of glew.h
+#endif
+
 /*-------------------------------------------------------------------------
  * Definition of KHRONOS_APICALL
  *-------------------------------------------------------------------------

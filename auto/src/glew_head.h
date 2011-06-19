@@ -11,6 +11,18 @@
 #if defined(__gl_ATI_h_)
 #error glATI.h included before glew.h
 #endif
+#if defined(__gl2_h_) || defined(__GL2_H_) 
+#error gl2.h included before glew.h
+#endif
+#if defined(__gl2ext_h_) || defined(__GL2EXT_H_) 
+#error gl2ext.h  included before glew.h
+#endif
+#if defined(__gl2platform_h_) || defined(__GL2PLATFORM_H_) 
+#error gl2platform.h  included before glew.h
+#endif
+#if defined(__khrplatform_h_) || defined(__KHRPLATFORM_H_)
+#error khrplatform.h included before glew.h
+#endif
 
 #define __gl_h_
 #define __GL_H__
@@ -18,6 +30,51 @@
 #define __glext_h_
 #define __GLEXT_H_
 #define __gl_ATI_h_
+#define __gl2_h_
+#define __gl2ext_h_
+#define __gl2platform_h_
+#define __GL2PLATFORM_H_
+#define __khrplatform_h_
+#define __KHRPLATFORM_H_
+
+
+/*
+ * GLEW_STATIC is defined for static library.
+ * GLEW_BUILD  is defined for building the DLL library.
+ */
+
+#ifdef WIN32
+#  ifdef GLEW_STATIC
+#    define GLEWAPI extern
+#  else
+#    ifdef GLEW_BUILD
+#      define GLEWAPI extern __declspec(dllexport)
+#    else
+#      define GLEWAPI extern __declspec(dllimport)
+#    endif
+#  endif /* GLEW_STATIC */
+#else
+#  ifdef GLEW_STATIC
+#    define GLEWAPI extern
+#  else
+#    if defined(__GNUC__) && __GNUC__>=4
+#      define GLEWAPI extern __attribute__ ((visibility("default")))
+#    elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
+#      define GLEWAPI extern __global
+#    else
+#     define GLEWAPI extern
+#    endif
+#  endif /* GLEW_STATIC */
+#endif /* WIN32 */
+
+#ifdef GLEW_ES_ONLY
+
+#include <GL/glesew.h>
+
+
+#else
+
+
 
 #if defined(_WIN32)
 
@@ -93,21 +150,6 @@ typedef _W64 int ptrdiff_t;
 #define GLAPIENTRY APIENTRY
 #endif
 
-/*
- * GLEW_STATIC is defined for static library.
- * GLEW_BUILD  is defined for building the DLL library.
- */
-
-#ifdef GLEW_STATIC
-#  define GLEWAPI extern
-#else
-#  ifdef GLEW_BUILD
-#    define GLEWAPI extern __declspec(dllexport)
-#  else
-#    define GLEWAPI extern __declspec(dllimport)
-#  endif
-#endif
-
 #else /* _UNIX */
 
 /*
@@ -132,21 +174,6 @@ typedef _W64 int ptrdiff_t;
 #define GLEW_APIENTRY_DEFINED
 #define APIENTRY
 
-/*
- * GLEW_STATIC is defined for static library.
- */
-
-#ifdef GLEW_STATIC
-#  define GLEWAPI extern
-#else
-#  if defined(__GNUC__) && __GNUC__>=4
-#   define GLEWAPI extern __attribute__ ((visibility("default")))
-#  elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
-#   define GLEWAPI extern __global
-#  else
-#   define GLEWAPI extern
-#  endif
-#endif
 
 /* <glu.h> */
 #ifndef GLAPI
