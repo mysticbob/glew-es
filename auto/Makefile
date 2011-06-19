@@ -283,6 +283,17 @@ $(S.DEST)/glew.c: $(EXT)/.dummy $(EXT_EGL)/.dummy $(EXT_ES)/.dummy
 	$(BIN)/make_list.pl $(GLES_CORE_SPEC) | grep -v '\"GL_ES_VERSION' >> $@  
 	$(BIN)/make_list.pl $(GLES_EXT_SPEC) >> $@
 	echo -e "\n  return GLEW_OK;\n}\n" >> $@
+	#---------egl------------
+	echo -e "\n#if defined (GLEW_ES_ONLY) \n" >> $@
+	echo -e "\n#if !defined(_WIN32) || !defined(GLEW_MX)" >> $@
+	$(BIN)/make_def_fun.pl EGL $(EGL_CORE_SPEC) >> $@
+	$(BIN)/make_def_fun.pl EGL $(EGL_EXT_SPEC) >> $@
+	echo -e "\n#endif /* !WIN32 || !GLEW_MX */" >> $@
+	echo -e "\n#if !defined(GLEW_MX)" >> $@;
+	echo -e "\nGLboolean __EGLEW_VERSION_1_1 = GL_FALSE;" >> $@
+	$(BIN)/make_def_var.pl EGL $(EGL_CORE_SPEC) >> $@
+	$(BIN)/make_def_var.pl EGL $(EGL_EXT_SPEC) >> $@
+	echo -e "\n#endif /* !GLEW_MX */\n" >> $@;
 	echo -e "\n#if defined(_WIN32)" >> $@
 	echo -e "\n#if !defined(GLEW_MX)" >> $@
 	$(BIN)/make_def_fun.pl WGL $(WGL_EXT_SPEC) >> $@
