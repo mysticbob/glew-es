@@ -4,12 +4,12 @@
   return ret;
 }
 
-#elif defined(_WIN32)
+#if defined(GLEW_ES_ONLY)
 
 #if defined(GLEW_MX)
-GLboolean wglewContextIsSupported (const WGLEWContext* ctx, const char* name)
+GLboolean eglewContextIsSupported (const EGLEWContext* ctx, const char* name)
 #else
-GLboolean wglewIsSupported (const char* name)
+GLboolean eglewIsSupported (const char* name)
 #endif
 {
   GLubyte* pos = (GLubyte*)name;
@@ -17,5 +17,5 @@ GLboolean wglewIsSupported (const char* name)
   GLboolean ret = GL_TRUE;
   while (ret && len > 0)
   {
-    if (_glewStrSame1(&pos, &len, (const GLubyte*)"WGL_", 4))
+    if (_glewStrSame1(&pos, &len, (const GLubyte*)"EGL_", 4))
     {

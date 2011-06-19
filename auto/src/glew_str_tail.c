@@ -4,4 +4,4 @@
   return ret;
 }
 
-#endif /* _WIN32 */
+#endif /* GLEW_ES_ONLY */

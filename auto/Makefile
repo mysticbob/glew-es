@@ -329,6 +329,8 @@ $(S.DEST)/glew.c: $(EXT)/.dummy $(EXT_EGL)/.dummy $(EXT_ES)/.dummy
 	cat $(SRC)/glew_str_head.c >> $@
 	$(BIN)/make_str.pl $(GL_CORE_SPEC) $(GL_EXT_SPEC) >> $@
 	$(BIN)/make_str.pl $(GLES_CORE_SPEC) $(GLES_EXT_SPEC) >> $@
+	cat $(SRC)/glew_str_egl.c >> $@
+	$(BIN)/make_str.pl $(EGL_CORE_SPEC) $(EGL_EXT_SPEC) >> $@
 	cat $(SRC)/glew_str_wgl.c >> $@
 	$(BIN)/make_str.pl $(WGL_EXT_SPEC) >> $@
 	cat $(SRC)/glew_str_glx.c >> $@
