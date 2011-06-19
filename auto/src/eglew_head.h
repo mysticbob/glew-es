@@ -80,7 +80,7 @@
 #error eglplatform.h included before glew.h
 #endif
 #if defined(GLES_EGLTYPES_H) || defined (gles_egltypes_h)
-#error eglplatform.h included before glew.h
+#error egltypes.h.h included before glew.h
 #endif
 
 #define __egl_h_
