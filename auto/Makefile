@@ -179,7 +179,7 @@ $(I.DEST)/glesew.h: $(EXT_ES)/.dummy
 	@echo "Creating glesew.h"
 	@echo "--------------------------------------------------------------------"
 	cp -f $(SRC)/glew_license.h $@
-	cat $(SRC)/glew_head_es.h >> $@
+	cat $(SRC)/glesew_head.h >> $@
 	$(BIN)/make_header.pl GLAPIENTRY GL $(GLES_CORE_SPEC) >> $@
 	$(BIN)/make_header.pl GLAPIENTRY GL $(GLES_EXT_SPEC) >> $@
 	echo -e "/* ------------------------------------------------------------------------- */\n\n#if defined(GLEW_MX) && defined(_WIN32)\n#define GLEW_FUN_EXPORT\n#else\n#define GLEW_FUN_EXPORT GLEWAPI\n#endif /* GLEW_MX */\n" >> $@
