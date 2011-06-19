@@ -1,5 +1,7 @@
 #include <GL/glew.h>
-#if defined(_WIN32)
+#if defined GLEW_ES_ONLY
+#include <GL/eglew.h>
+#elif defined(_WIN32)
 #  include <GL/wglew.h>
 #elif !defined(__APPLE__) || defined(GLEW_APPLE_GLX)
 #  include <GL/glxew.h>
@@ -10,19 +12,33 @@
  */
 #ifdef GLEW_MX
 #  define glewGetContext() ctx
-#  ifdef _WIN32
+#  if defined GLEW_ES_ONLY
+#    ifdef _WIN32
+#      define GLEW_CONTEXT_ARG_DEF_INIT GLEWContext* ctx
+#      define GLEW_CONTEXT_ARG_VAR_INIT ctx
+#      define eglewGetContext() ctx
+#      define EGLEW_CONTEXT_ARG_DEF_INIT EGLEWContext* ctx
+#      define EGLEW_CONTEXT_ARG_DEF_LIST EGLEWContext* ctx
+#    else /* _WIN32 */
+#      define GLEW_CONTEXT_ARG_DEF_INIT void
+#      define GLEW_CONTEXT_ARG_VAR_INIT
+#      define eglewGetContext() ctx
+#      define EGLEW_CONTEXT_ARG_DEF_INIT void
+#      define EGLEW_CONTEXT_ARG_DEF_LIST EGLEWContext* ctx
+#    endif
+#  elif defined _WIN32
 #    define GLEW_CONTEXT_ARG_DEF_INIT GLEWContext* ctx
 #    define GLEW_CONTEXT_ARG_VAR_INIT ctx
 #    define wglewGetContext() ctx
 #    define WGLEW_CONTEXT_ARG_DEF_INIT WGLEWContext* ctx
 #    define WGLEW_CONTEXT_ARG_DEF_LIST WGLEWContext* ctx
-#  else /* _WIN32 */
+#  else 
 #    define GLEW_CONTEXT_ARG_DEF_INIT void
 #    define GLEW_CONTEXT_ARG_VAR_INIT
 #    define glxewGetContext() ctx
 #    define GLXEW_CONTEXT_ARG_DEF_INIT void
 #    define GLXEW_CONTEXT_ARG_DEF_LIST GLXEWContext* ctx
-#  endif /* _WIN32 */
+#  endif /* GLEW_ES_ONLY */
 #  define GLEW_CONTEXT_ARG_DEF_LIST GLEWContext* ctx
 #else /* GLEW_MX */
 #  define GLEW_CONTEXT_ARG_DEF_INIT void
@@ -32,7 +48,49 @@
 #  define WGLEW_CONTEXT_ARG_DEF_LIST void
 #  define GLXEW_CONTEXT_ARG_DEF_INIT void
 #  define GLXEW_CONTEXT_ARG_DEF_LIST void
+#  define EGLEW_CONTEXT_ARG_DEF_INIT void
+#  define EGLEW_CONTEXT_ARG_DEF_LIST void
 #endif /* GLEW_MX */
+
+#if defined(GLEW_ES_ONLY)
+
+#ifdef linux
+
+#include <dlfcn.h>
+//to do ?? properly set the lib paths depending on openGL version.
+#define GLEW_OPENGLES_LIB_PATH  "/usr/lib/libGLESv2.so"
+#define GLEW_EGL_LIB_PATH "/usr/lib/libEGL.so"
+void* esGetProcAddress (const GLubyte *name)
+{
+  static void* imageEGL = NULL;
+  static void* imageGLES = NULL;
+  if ((name[0] == 'e') && (name[1] == 'g') && (name[2] == 'l'))
+  {
+    if (NULL == imageEGL) 
+    {
+      imageEGL = dlopen(GLEW_EGL_LIB_PATH, RTLD_LAZY);
+    }
+    if( !imageEGL ) return NULL;
+    void* addr = dlsym(imageEGL, (const char*)name);
+    if( addr ) return addr;
+    return NULL;
+  }
+  else if((name[0] == 'g') && (name[1] == 'l'))
+  {
+    if (NULL == imageGLES) 
+    {
+      imageGLES = dlopen(GLEW_OPENGLES_LIB_PATH, RTLD_LAZY);
+    }
+    if( !imageGLES ) return NULL;
+    void* addr = dlsym(imageGLES, (const char*)name);
+    if( addr ) return addr;
+    return NULL;
+  }
+  return NULL;
+}
+#endif  /* linux */
+
+#else
 
 #if defined(__sgi) || defined (__sun) || defined(GLEW_APPLE_GLX)
 #include <dlfcn.h>
@@ -113,11 +171,14 @@ void* NSGLGetProcAddress (const GLubyte *name)
 }
 #endif /* MAC_OS_X_VERSION_10_3 */
 #endif /* __APPLE__ */
+#endif /* GLEW_ES_ONLY */
 
 /*
  * Define glewGetProcAddress.
  */
-#if defined(_WIN32)
+#if defined(GLEW_ES_ONLY)
+#  define glewGetProcAddress(name) esGetProcAddress(name)
+#elif defined(_WIN32)
 #  define glewGetProcAddress(name) wglGetProcAddress((LPCSTR)name)
 #else
 #  if defined(__APPLE__)
