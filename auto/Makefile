@@ -19,6 +19,7 @@ SRC = src
 CORE = core
 CORE_ES = core_es
 CORE_EGL = core_egl
+COMMON = common
 EXT = extensions
 BLACKLIST = blacklist
 
@@ -270,11 +271,17 @@ $(S.DEST)/glew.c: $(EXT)/.dummy $(EXT_EGL)/.dummy $(EXT_ES)/.dummy
 	$(BIN)/make_def_var.pl GL $(GLES_EXT_SPEC) >> $@
 	echo -e "\n#endif /* GLEW_ES_ONLY */ \n" >> $@
 	echo -e "\n#endif /* !GLEW_MX */\n" >> $@;
+	#---move the common extensions to common folder---
+	$(BIN)/move_common_ext.sh $(EXT) $(EXT_ES) $(COMMON)
 	$(BIN)/make_init.pl GL $(GL_CORE_SPEC) >> $@
 	$(BIN)/make_init.pl GL $(GL_EXT_SPEC) >> $@
+	$(BIN)/make_init.pl GL $(GLES_CORE_SPEC) >> $@
+	$(BIN)/make_init.pl GL $(GLES_EXT_SPEC) >> $@
 	cat $(SRC)/glew_init_gl.c >> $@
 	$(BIN)/make_list.pl $(GL_CORE_SPEC) | grep -v '\"GL_VERSION' >> $@
 	$(BIN)/make_list.pl $(GL_EXT_SPEC) >> $@
+	$(BIN)/make_list.pl $(GLES_CORE_SPEC) | grep -v '\"GL_ES_VERSION' >> $@  
+	$(BIN)/make_list.pl $(GLES_EXT_SPEC) >> $@
 	echo -e "\n  return GLEW_OK;\n}\n" >> $@
 	echo -e "\n#if defined(_WIN32)" >> $@
 	echo -e "\n#if !defined(GLEW_MX)" >> $@
@@ -304,11 +311,14 @@ $(S.DEST)/glew.c: $(EXT)/.dummy $(EXT_EGL)/.dummy $(EXT_ES)/.dummy
 	cat $(SRC)/glew_init_tail.c >> $@
 	cat $(SRC)/glew_str_head.c >> $@
 	$(BIN)/make_str.pl $(GL_CORE_SPEC) $(GL_EXT_SPEC) >> $@
+	$(BIN)/make_str.pl $(GLES_CORE_SPEC) $(GLES_EXT_SPEC) >> $@
 	cat $(SRC)/glew_str_wgl.c >> $@
 	$(BIN)/make_str.pl $(WGL_EXT_SPEC) >> $@
 	cat $(SRC)/glew_str_glx.c >> $@
 	$(BIN)/make_str.pl $(GLX_CORE_SPEC) $(GLX_EXT_SPEC) >> $@
 	cat $(SRC)/glew_str_tail.c >> $@
+	#---remove the common folder and copy back the files---
+	$(BIN)/move_back_common_ext.sh $(EXT_ES) $(COMMON)
 	perl -e "s/GLEW_VERSION_STRING/$(GLEW_VERSION)/g" -pi $@
 	perl -e "s/GLEW_VERSION_MAJOR_STRING/$(GLEW_MAJOR)/g" -pi $@
 	perl -e "s/GLEW_VERSION_MINOR_STRING/$(GLEW_MINOR)/g" -pi $@
