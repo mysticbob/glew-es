@@ -243,20 +243,32 @@ $(I.DEST)/glxew.h: $(EXT)/.dummy
 	perl -e 's/GLXEW_EXPORT GLboolean __GLXEW_VERSION_1_2;/GLXEW_EXPORT GLboolean __GLXEW_VERSION_1_0;\nGLXEW_EXPORT GLboolean __GLXEW_VERSION_1_1;\nGLXEW_EXPORT GLboolean __GLXEW_VERSION_1_2;/' -pi $@
 	cat $(SRC)/glxew_tail.h >> $@
 
-$(S.DEST)/glew.c: $(EXT)/.dummy
+$(S.DEST)/glew.c: $(EXT)/.dummy $(EXT_EGL)/.dummy $(EXT_ES)/.dummy
 	@echo "--------------------------------------------------------------------"
 	@echo "Creating glew.c"
 	@echo "--------------------------------------------------------------------"
+
 	cp -f $(SRC)/glew_license.h $@
 	cat $(SRC)/glew_head.c >> $@
 	echo -e "\n#if !defined(_WIN32) || !defined(GLEW_MX)" >> $@
+	echo -e "\n#ifndef GLEW_ES_ONLY \n" >> $@
 	$(BIN)/make_def_fun.pl GL $(GL_CORE_SPEC) >> $@
 	$(BIN)/make_def_fun.pl GL $(GL_EXT_SPEC) >> $@
+	echo -e "\n#else   \n" >> $@
+	$(BIN)/make_def_fun.pl GL $(GLES_CORE_SPEC) >> $@
+	$(BIN)/make_def_fun.pl GL $(GLES_EXT_SPEC) >> $@
+	echo -e "\n#endif /* GLEW_ES_ONLY */  \n" >> $@	
 	echo -e "\n#endif /* !WIN32 || !GLEW_MX */" >> $@
 	echo -e "\n#if !defined(GLEW_MX)" >> $@;
+	echo -e "\n#ifndef GLEW_ES_ONLY \n" >> $@
 	echo -e "\nGLboolean __GLEW_VERSION_1_1 = GL_FALSE;" >> $@
 	$(BIN)/make_def_var.pl GL $(GL_CORE_SPEC) >> $@
 	$(BIN)/make_def_var.pl GL $(GL_EXT_SPEC) >> $@
+	echo -e "\n#else \n" >> $@
+	echo -e "\nGLboolean __GLEW_ES_VERSION_1_0 = GL_FALSE;" >> $@
+	$(BIN)/make_def_var.pl GL $(GLES_CORE_SPEC) >> $@
+	$(BIN)/make_def_var.pl GL $(GLES_EXT_SPEC) >> $@
+	echo -e "\n#endif /* GLEW_ES_ONLY */ \n" >> $@
 	echo -e "\n#endif /* !GLEW_MX */\n" >> $@;
 	$(BIN)/make_init.pl GL $(GL_CORE_SPEC) >> $@
 	$(BIN)/make_init.pl GL $(GL_EXT_SPEC) >> $@
